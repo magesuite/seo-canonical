@@ -1,0 +1,14 @@
+<?php
+/**
+ * Adds canonical URLs to prevent duplication of content issues with SEO.
+ *
+ * @see https://support.google.com/webmasters/answer/139066
+ */
+?>
+<?php
+$canonicalUrl = $block->getCanonicalUrl();
+if ($canonicalUrl):
+?>
+<link rel="canonical" href="<?= $canonicalUrl; ?>">
+<?php
+endif;

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magesuite" translate="label" sortOrder="300">
+            <label>MageSuite</label>
+        </tab>
+        <section id="seo" translate="label" type="text" sortOrder="300" showInDefault="1">
+            <label>SEO</label>
+            <tab>magesuite</tab>
+            <resource>MageSuite_SeoCanonical::config_seo</resource>
+            <group id="configuration" translate="label" type="text" sortOrder="1" showInDefault="1">
+                <label>Configuration</label>
+                <field id="canonical_tag_enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Canonical Tag For Other Pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[Enables canonical tag for pages which Magento doesn't support out of the box like CMS ones. <a href="https://support.google.com/webmasters/answer/139066" target="_blank" rel=”noopener”>Read more</a>.<br>You can enable this tag for category and product pages under <b>Stores→Configuration→Catalog→Catalog</b>.]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
