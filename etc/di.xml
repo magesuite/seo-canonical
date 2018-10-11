@@ -19,6 +19,10 @@
         </arguments>
     </type>
 
+    <type name="Magento\Framework\View\Page\Config">
+        <plugin sortOrder="1" name="magesuiteCheckoutRegistrationExtensionConfig" type="MageSuite\SeoCanonical\Plugin\Framework\View\Page\Config\OverrideProductCanonicalUrl"/>
+    </type>
+
 </config>
 
 
