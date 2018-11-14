@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="search-engine-optimization">
+        <container name="container_seo_canonical_url">
+            <field name="seo_canonical_url">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+</form>
