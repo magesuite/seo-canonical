@@ -23,6 +23,10 @@
         <plugin sortOrder="1" name="magesuiteCheckoutRegistrationExtensionConfig" type="MageSuite\SeoCanonical\Plugin\Framework\View\Page\Config\OverrideProductCanonicalUrl"/>
     </type>
 
+    <type name="Magento\Catalog\Helper\Category">
+        <plugin name="category_remove_canonical_for_pagination" type="MageSuite\SeoCanonical\Plugin\Catalog\Helper\Category\RemoveCanonicalForPagination"/>
+    </type>
+
 </config>
 
 

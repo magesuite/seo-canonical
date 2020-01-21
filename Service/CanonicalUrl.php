@@ -2,7 +2,7 @@
 
 namespace MageSuite\SeoCanonical\Service;
 
-class CanonicalUrl extends \Magento\Framework\View\Element\Template
+class CanonicalUrl
 {
     const SEO_CANONICAL_TAG_PATH = 'seo/configuration/canonical_tag_enabled';
 
