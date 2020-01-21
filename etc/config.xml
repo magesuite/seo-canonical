@@ -5,6 +5,7 @@
         <seo>
             <configuration>
                 <canonical_tag_enabled>0</canonical_tag_enabled>
+                <prev_next_link_enabled>0</prev_next_link_enabled>
             </configuration>
         </seo>
     </default>
