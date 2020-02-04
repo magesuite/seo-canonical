@@ -27,6 +27,9 @@
         <plugin name="category_remove_canonical_for_pagination" type="MageSuite\SeoCanonical\Plugin\Catalog\Helper\Category\RemoveCanonicalForPagination"/>
     </type>
 
+    <type name="Magento\Theme\Block\Html\Pager">
+        <plugin name="add_prev_and_next_tag_to_registry" type="MageSuite\SeoCanonical\Plugin\Theme\Block\Html\Pager\AddToPrevAndNextUrlToRegistry"/>
+    </type>
 </config>
 
 

@@ -1,9 +1,0 @@
-<?php
-/** @var \MageSuite\SeoCanonical\ViewModel\Category\Next $viewModel */
-$viewModel = $block->getViewModel();
-$nextUrl = $viewModel->getNextUrl();
-;?>
-
-<?php if($nextUrl):?>
-    <link rel="next" href="<?= $nextUrl ?>">
-<?php endif;?>

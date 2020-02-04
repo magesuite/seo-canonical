@@ -1,8 +1,0 @@
-<?php
-/** @var \MageSuite\SeoCanonical\ViewModel\Category\Prev $viewModel */
-$viewModel = $block->getViewModel();
-$prev = $viewModel->getPrevUrl();
-;?>
-<?php if ($prev):?>
-    <link rel="prev" href="<?= $prev ?>">
-<?php endif;?>
