@@ -10,13 +10,25 @@ class RemoveCanonicalForPagination
      */
     protected $request;
 
-    public function __construct(\Magento\Framework\App\Request\Http $request)
+    /**
+     * @var \MageSuite\SeoCanonical\Helper\Configuration
+     */
+    protected $configuration;
+
+    public function __construct(
+        \Magento\Framework\App\Request\Http $request,
+        \MageSuite\SeoCanonical\Helper\Configuration $configuration)
     {
         $this->request = $request;
+        $this->configuration = $configuration;
     }
 
     public function aroundCanUseCanonicalTag(\Magento\Catalog\Helper\Category $subject, callable $proceed, $store = null)
     {
+        if(!$this->configuration->isCanonicalForPaginatedPagesDisabled()) {
+            return $proceed($store);
+        }
+
         $params = $this->request->getParams();
 
         if(isset($params[self::PAGINATION_PARAM]) && $params[self::PAGINATION_PARAM] != 1){

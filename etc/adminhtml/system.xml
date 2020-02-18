@@ -18,6 +18,13 @@
                         <![CDATA[Enables canonical tag for pages which Magento doesn't support out of the box like CMS ones. <a href="https://support.google.com/webmasters/answer/139066" target="_blank" rel=”noopener”>Read more</a>.<br>You can enable this tag for category and product pages under <b>Stores→Configuration→Catalog→Catalog</b>.]]>
                     </comment>
                 </field>
+                <field id="canonical_pagination_disabled" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Disable canonical tag for paginated category pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[Disables canonical tag for <b>non-first</b> category pages.]]>
+                    </comment>
+                </field>
                 <field id="prev_next_link_enabled" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Include prev and next link on category page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

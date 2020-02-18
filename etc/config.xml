@@ -6,6 +6,7 @@
             <configuration>
                 <canonical_tag_enabled>0</canonical_tag_enabled>
                 <prev_next_link_enabled>0</prev_next_link_enabled>
+                <canonical_pagination_disabled>1</canonical_pagination_disabled>
             </configuration>
         </seo>
     </default>
