@@ -25,7 +25,7 @@ class RemoveCanonicalForPagination
 
     public function aroundCanUseCanonicalTag(\Magento\Catalog\Helper\Category $subject, callable $proceed, $store = null)
     {
-        if(!$this->configuration->isCanonicalForPaginatedPagesDisabled()) {
+        if($this->configuration->isCanonicalForPaginatedPagesEnabled()) {
             return $proceed($store);
         }
 
