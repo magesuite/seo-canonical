@@ -26,8 +26,7 @@ class CanonicalUrl
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\UrlInterface $urlBuilder
-    )
-    {
+    ) {
         $this->registry = $registry;
         $this->scopeConfig = $scopeConfig;
         $this->urlBuilder = $urlBuilder;
@@ -55,7 +54,11 @@ class CanonicalUrl
 
     private function formatCanonicalUrl($canonicalUrl)
     {
-        return rtrim($this->stripGetParams($canonicalUrl), '/');
+        $urlWithoutParams = $this->stripGetParams($canonicalUrl);
+        if ($this->isHomepageWithStoreCodeInPath($urlWithoutParams)) {
+            return $urlWithoutParams;
+        }
+        return rtrim($urlWithoutParams, '/');
     }
 
     private function stripGetParams($canonicalUrl)
@@ -63,7 +66,16 @@ class CanonicalUrl
         return strtok($canonicalUrl, '?');
     }
 
-    private function isCategoryOrProductPage() {
+    private function isCategoryOrProductPage()
+    {
         return boolval($this->registry->registry('current_category'));
+    }
+
+    protected function isHomepageWithStoreCodeInPath($urlWithoutParams)
+    {
+        if ($this->urlBuilder->getUrl('', ['_current' => true]) === $urlWithoutParams) {
+            return !empty(parse_url($urlWithoutParams, PHP_URL_PATH));
+        }
+        return false;
     }
 }
