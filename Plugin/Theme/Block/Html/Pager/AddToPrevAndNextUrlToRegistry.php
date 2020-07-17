@@ -17,7 +17,7 @@ class AddToPrevAndNextUrlToRegistry
     public function afterGetNextPageUrl(\Magento\Theme\Block\Html\Pager $subject, $result)
     {
         if (!$subject->isLastPage()) {
-            $this->registry->register(\MageSuite\SeoCanonical\Helper\HeaderTag::NEXT_TAG_REGISTRY_KEY, $result);
+            $this->registry->register(\MageSuite\SeoCanonical\Helper\HeaderTag::NEXT_TAG_REGISTRY_KEY, $result, true);
         }
 
         return $result;
@@ -28,7 +28,7 @@ class AddToPrevAndNextUrlToRegistry
         $currentPage = $subject->getCurrentPage();
 
         if ($currentPage > 1) {
-            $this->registry->register(\MageSuite\SeoCanonical\Helper\HeaderTag::PREV_TAG_REGISTRY_KEY, $result);
+            $this->registry->register(\MageSuite\SeoCanonical\Helper\HeaderTag::PREV_TAG_REGISTRY_KEY, $result, true);
         }
 
         return $result;
