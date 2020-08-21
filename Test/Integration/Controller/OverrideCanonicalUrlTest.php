@@ -13,7 +13,7 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
      */
     protected $productRepository;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
