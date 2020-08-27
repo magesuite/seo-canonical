@@ -13,7 +13,7 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
      */
     protected $productRepository;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -31,7 +31,9 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
 
         $body = $this->getResponse()->getBody();
 
-        $this->assertContains('<link  rel="canonical" href="http://localhost/index.php/simple-product.html" />', $body);
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
+        $this->$assertContains('<link  rel="canonical" href="http://localhost/index.php/simple-product.html" />', $body);
     }
 
     /**
@@ -48,6 +50,8 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
 
         $body = $this->getResponse()->getBody();
 
-        $this->assertContains('<link  rel="canonical" href="http://example.com/canonical" />', $body);
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
+        $this->$assertContains('<link  rel="canonical" href="http://example.com/canonical" />', $body);
     }
 }

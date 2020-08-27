@@ -24,7 +24,7 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
      */
     protected $urlBuilderStub;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->coreRegistry = $this->objectManager->get(\Magento\Framework\Registry::class);
