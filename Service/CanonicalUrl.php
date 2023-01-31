@@ -6,16 +6,28 @@ class CanonicalUrl
 {
     const SEO_CANONICAL_TAG_PATH = 'seo/configuration/canonical_tag_enabled';
 
-    protected \Magento\Framework\App\Request\Http $request;
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
-    protected \Magento\Framework\UrlInterface $urlBuilder;
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
+    protected $urlBuilder;
+
 
     public function __construct(
-        \Magento\Framework\App\Request\Http $request,
+        \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\UrlInterface $urlBuilder
     ) {
-        $this->request = $request;
+        $this->registry = $registry;
         $this->scopeConfig = $scopeConfig;
         $this->urlBuilder = $urlBuilder;
     }
@@ -56,8 +68,7 @@ class CanonicalUrl
 
     private function isCategoryOrProductPage()
     {
-        $fullActionName = $this->request->getFullActionName();
-        return in_array($fullActionName, ['catalog_category_view', 'catalog_product_view']);
+        return boolval($this->registry->registry('current_category'));
     }
 
     protected function isHomepageWithStoreCodeInPath($urlWithoutParams)
