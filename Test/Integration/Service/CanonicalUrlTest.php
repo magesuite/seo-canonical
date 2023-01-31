@@ -27,12 +27,11 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-        $this->coreRegistry = $this->objectManager->get(\Magento\Framework\Registry::class);
 
         $this->urlBuilderStub = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)->getMock();
 
         $this->canonicalUrl = new \MageSuite\SeoCanonical\Service\CanonicalUrl(
-            $this->coreRegistry,
+            $this->objectManager->get(\Magento\Framework\App\Request\Http::class),
             $this->objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class),
             $this->urlBuilderStub
         );
