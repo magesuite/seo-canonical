@@ -24,15 +24,23 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
      */
     protected $urlBuilderStub;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $requestStub;
+
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-        $this->coreRegistry = $this->objectManager->get(\Magento\Framework\Registry::class);
 
+        $this->requestStub = $this
+            ->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->urlBuilderStub = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)->getMock();
 
         $this->canonicalUrl = new \MageSuite\SeoCanonical\Service\CanonicalUrl(
-            $this->coreRegistry,
+            $this->requestStub,
             $this->objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class),
             $this->urlBuilderStub
         );
@@ -79,7 +87,7 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
     private function itDoesntReturnCanonicalUrlOnCategory()
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home');
-        $this->coreRegistry->register('current_category', 'dummy');
+        $this->requestStub->method('getFullActionName')->willReturn('catalog_category_view');
 
         $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrl());
     }
