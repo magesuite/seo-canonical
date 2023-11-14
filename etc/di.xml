@@ -31,8 +31,3 @@
         <plugin name="add_prev_and_next_tag_to_registry" type="MageSuite\SeoCanonical\Plugin\Theme\Block\Html\Pager\AddToPrevAndNextUrlToRegistry"/>
     </type>
 </config>
-
-
-
-
-
