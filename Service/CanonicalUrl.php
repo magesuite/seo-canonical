@@ -27,7 +27,7 @@ class CanonicalUrl
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
 
-        return $canonicalTagEnabled && !$this->isCategoryOrProductPage();
+        return $canonicalTagEnabled && !$this->isCategoryOrSearchOrProductPage();
     }
 
     public function getCanonicalUrl()
@@ -54,10 +54,10 @@ class CanonicalUrl
         return strtok($canonicalUrl, '?');
     }
 
-    private function isCategoryOrProductPage()
+    private function isCategoryOrSearchOrProductPage()
     {
         $fullActionName = $this->request->getFullActionName();
-        return in_array($fullActionName, ['catalog_category_view', 'catalog_product_view']);
+        return in_array($fullActionName, ['catalog_category_view', 'catalog_product_view', 'catalogsearch_result_index']);
     }
 
     protected function isHomepageWithStoreCodeInPath($urlWithoutParams)
