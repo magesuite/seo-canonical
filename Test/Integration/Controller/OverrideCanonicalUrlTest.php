@@ -13,7 +13,7 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
      */
     protected $productRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -24,23 +24,20 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
      * @magentoDataFixture Magento/Catalog/_files/product_simple.php
      * @magentoConfigFixture current_store catalog/seo/product_canonical_tag 1
      */
-    public function testItReturnsDefaultCanonicalUrlWhenThereIsNoCustomOneDefined()
+    public function testItReturnsDefaultCanonicalUrlWhenThereIsNoCustomOneDefined(): void
     {
         $product = $this->productRepository->get('simple');
         $this->dispatch('catalog/product/view/id/' . $product->getId());
 
         $body = $this->getResponse()->getBody();
-
-        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
-
-        $this->$assertContains('<link  rel="canonical" href="http://localhost/index.php/simple-product.html" />', $body);
+        $this->assertStringContainsString('<link rel="canonical" href="http://localhost/index.php/simple-product.html" />', $this->normalizeBody($body));
     }
 
     /**
      * @magentoDataFixture Magento/Catalog/_files/product_simple.php
      * @magentoConfigFixture current_store catalog/seo/product_canonical_tag 1
      */
-    public function testItReturnsOverridenCanonicalUrlWhenCustomOneIsDefined()
+    public function testItReturnsOverriddenCanonicalUrlWhenCustomOneIsDefined(): void
     {
         $product = $this->productRepository->get('simple');
         $product->setSeoCanonicalUrl('http://example.com/canonical');
@@ -50,8 +47,14 @@ class OverrideCanonicalUrlTest extends \Magento\TestFramework\TestCase\AbstractC
 
         $body = $this->getResponse()->getBody();
 
-        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+        $this->assertStringContainsString('<link rel="canonical" href="http://example.com/canonical" />', $this->normalizeBody($body));
+    }
 
-        $this->$assertContains('<link  rel="canonical" href="http://example.com/canonical" />', $body);
+    /**
+     * Backwards compatibility with Magento <=2.4.7
+     */
+    protected function normalizeBody(string $body): string
+    {
+        return str_replace('<link  rel=', '<link rel=', $body);
     }
 }
