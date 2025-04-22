@@ -25,7 +25,12 @@
                         <![CDATA[Enable canonical tag for <b>non-first</b> category pages (default Magento behaviour).<br/>When disabled, paginated category pages <b>will not</b> contain canonical tag (improvement provided by Magesuite).]]>
                     </comment>
                 </field>
-                <field id="prev_next_link_enabled" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="canonical_pagination_param_enabled" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Pagination Param on canonical tag for paginated category pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable pagination param for canonical tag on <b>non-first</b> category pages.<br/>.]]></comment>
+                </field>
+                <field id="prev_next_link_enabled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Include prev and next link on category page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
