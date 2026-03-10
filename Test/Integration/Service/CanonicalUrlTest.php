@@ -1,33 +1,15 @@
 <?php
 
-namespace MageSuite\SeoCanonical\Test\Block;
+namespace MageSuite\SeoCanonical\Test\Service;
 
 class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $coreRegistry;
-
-    /**
-     * @var \MageSuite\SeoCanonical\Service\CanonicalUrl
-     */
-    protected $canonicalUrl;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $urlBuilderStub;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $requestStub;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Registry $coreRegistry;
+    protected ?\MageSuite\SeoCanonical\Service\CanonicalUrl $canonicalUrl;
+    protected ?\PHPUnit\Framework\MockObject\MockObject $urlBuilderStub;
+    protected ?\PHPUnit\Framework\MockObject\MockObject $requestStub;
+    protected ?\PHPUnit\Framework\MockObject\MockObject $categoryHelperStub;
 
     public function setUp(): void
     {
@@ -38,18 +20,23 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->urlBuilderStub = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)->getMock();
+        $this->categoryHelperStub = $this
+            ->getMockBuilder(\Magento\Catalog\Helper\Category::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->canonicalUrl = new \MageSuite\SeoCanonical\Service\CanonicalUrl(
             $this->requestStub,
-            $this->objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class),
-            $this->urlBuilderStub
+            $this->objectManager->get(\MageSuite\SeoCanonical\Helper\Configuration::class),
+            $this->urlBuilderStub,
+            $this->categoryHelperStub
         );
     }
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoConfigFixture current_store seo/configuration/canonical_tag_enabled 1
+     * @magentoConfigFixture default/seo/configuration/canonical_tag_enabled 1
      */
     public function testItReturnsCanonicalUrl()
     {
@@ -63,25 +50,25 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home');
 
-        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrl());
+        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
     private function itStripGetParamsFromCanonical()
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home?a=b&test=true');
 
-        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrl());
+        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
     private function itRemovesSlashFromCanonicalUrl()
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home/');
 
-        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrl());
+        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrlForOtherPages());
 
         $this->urlBuilderStub->method('getUrl')->willReturn('home/?a=b&test=true');
 
-        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrl());
+        $this->assertEquals('home', $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
     private function itDoesntReturnCanonicalUrlOnCategory()
@@ -89,19 +76,19 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
         $this->urlBuilderStub->method('getUrl')->willReturn('home');
         $this->requestStub->method('getFullActionName')->willReturn('catalog_category_view');
 
-        $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrl());
+        $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
     /**
      * @magentoAppArea frontend
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoConfigFixture current_store seo/configuration/canonical_tag_enabled 0
+     * @magentoConfigFixture default/seo/configuration/canonical_tag_enabled 0
      */
     public function testItDontReturnsCanonicalUrl()
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home');
-        $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrl());
+        $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
 }

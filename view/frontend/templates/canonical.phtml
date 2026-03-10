@@ -1,12 +1,13 @@
 <?php
 /**
  * Adds canonical URLs to prevent duplication of content issues with SEO.
- *
  * @see https://support.google.com/webmasters/answer/139066
+ *
+ * @var \MageSuite\SeoCanonical\Block\Canonical $block
  */
 ?>
 <?php
-$canonicalUrl = $block->getCanonicalUrl();
+$canonicalUrl = $block->getCanonicalUrlForOtherPages();
 if ($canonicalUrl):
 ?>
 <link rel="canonical" href="<?= $canonicalUrl; ?>">

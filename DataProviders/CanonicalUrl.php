@@ -25,9 +25,9 @@ class CanonicalUrl extends \MageSuite\Opengraph\DataProviders\TagProvider implem
 
     public function getTags()
     {
-        $canonicalUrl = $this->canonicalUrl->getCanonicalUrl();
+        $canonicalUrl = $this->canonicalUrl->getCanonicalUrlForOtherPages();
 
-        if(!$canonicalUrl){
+        if (!$canonicalUrl){
             return [];
         }
 
