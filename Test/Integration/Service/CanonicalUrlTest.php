@@ -4,12 +4,11 @@ namespace MageSuite\SeoCanonical\Test\Service;
 
 class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
 {
-    protected ?\Magento\TestFramework\ObjectManager $objectManager;
-    protected ?\Magento\Framework\Registry $coreRegistry;
-    protected ?\MageSuite\SeoCanonical\Service\CanonicalUrl $canonicalUrl;
-    protected ?\PHPUnit\Framework\MockObject\MockObject $urlBuilderStub;
-    protected ?\PHPUnit\Framework\MockObject\MockObject $requestStub;
-    protected ?\PHPUnit\Framework\MockObject\MockObject $categoryHelperStub;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager = null;
+    protected ?\MageSuite\SeoCanonical\Service\CanonicalUrl $canonicalUrl = null;
+    protected ?\PHPUnit\Framework\MockObject\MockObject $urlBuilderStub = null;
+    protected ?\PHPUnit\Framework\MockObject\MockObject $requestStub = null;
+    protected ?\PHPUnit\Framework\MockObject\MockObject $categoryHelperStub = null;
 
     public function setUp(): void
     {
