@@ -1,70 +1,114 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\SeoCanonical\Service;
 
 class CanonicalUrl
 {
-    const SEO_CANONICAL_TAG_PATH = 'seo/configuration/canonical_tag_enabled';
-
-    protected \Magento\Framework\App\Request\Http $request;
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
-    protected \Magento\Framework\UrlInterface $urlBuilder;
-
     public function __construct(
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Framework\UrlInterface $urlBuilder
+        protected \Magento\Framework\App\Request\Http $request,
+        protected \MageSuite\SeoCanonical\Helper\Configuration $configuration,
+        protected \Magento\Framework\UrlInterface $urlBuilder,
+        protected \Magento\Catalog\Helper\Category $categoryHelper
     ) {
-        $this->request = $request;
-        $this->scopeConfig = $scopeConfig;
-        $this->urlBuilder = $urlBuilder;
     }
 
-    public function isEnabled()
+    public function getCanonicalUrl(): string
     {
-        $canonicalTagEnabled = $this->scopeConfig->getValue(
-            self::SEO_CANONICAL_TAG_PATH,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
-
-        return $canonicalTagEnabled && !$this->isCategoryOrSearchOrProductPage();
+        return $this->formatCanonicalUrl($this->getCurrentUrl(), $this->isCategoryPage());
     }
 
-    public function getCanonicalUrl()
+    public function getCanonicalUrlForOtherPages(): ?string
     {
-        if (!$this->isEnabled()) {
+        if (!$this->isEnabledForOtherPages()) {
             return null;
         }
 
-        $canonicalUrl = $this->urlBuilder->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]);
-        return $this->formatCanonicalUrl($canonicalUrl);
+        return $this->formatCanonicalUrl($this->getCurrentUrl());
     }
 
-    private function formatCanonicalUrl($canonicalUrl)
+    protected function getCurrentUrl(): string
     {
-        $urlWithoutParams = $this->stripGetParams($canonicalUrl);
-        if ($this->isHomepageWithStoreCodeInPath($urlWithoutParams)) {
-            return $urlWithoutParams;
+        return $this->urlBuilder->getUrl('*/*/*', [
+            '_current' => true,
+            '_use_rewrite' => true
+        ]);
+    }
+
+    public function isEnabledForOtherPages(): bool
+    {
+        return $this->configuration->isEnabledForOtherPages()
+            && !$this->isCategoryOrSearchOrProductPage();
+    }
+
+    public function isCanonicalPage(): bool
+    {
+        if (!$this->areParamsForCanonicalPageValid()) {
+            return false;
         }
-        return rtrim($urlWithoutParams, '/');
+
+        return $this->request->getUriString() === $this->getCanonicalUrl();
     }
 
-    private function stripGetParams($canonicalUrl)
+    protected function formatCanonicalUrl(string $url, bool $isCategory = false): string
     {
-        return strtok($canonicalUrl, '?');
-    }
+        $url = $this->stripGetParams($url);
 
-    private function isCategoryOrSearchOrProductPage()
-    {
-        $fullActionName = $this->request->getFullActionName();
-        return in_array($fullActionName, ['catalog_category_view', 'catalog_product_view', 'catalogsearch_result_index']);
-    }
-
-    protected function isHomepageWithStoreCodeInPath($urlWithoutParams)
-    {
-        if ($this->urlBuilder->getUrl('', ['_current' => true]) === $urlWithoutParams) {
-            return !empty(parse_url($urlWithoutParams, PHP_URL_PATH));
+        if ($isCategory) {
+            return $this->categoryHelper->getCanonicalUrl($url);
         }
+
+        if ($this->isHomepageWithStoreCodeInPath($url)) {
+            return $url;
+        }
+
+        return rtrim($url, '/');
+    }
+
+    protected function stripGetParams(string $url): string
+    {
+        return strtok($url, '?');
+    }
+
+    protected function isCategoryOrSearchOrProductPage(): bool
+    {
+        $action = $this->request->getFullActionName();
+
+        return in_array($action, [
+            'catalog_category_view',
+            'catalogsearch_result_index',
+            'catalog_product_view'
+        ], true);
+    }
+
+    protected function isCategoryPage(): bool
+    {
+        return $this->request->getFullActionName() === 'catalog_category_view';
+    }
+
+    protected function isHomepageWithStoreCodeInPath(string $url): bool
+    {
+        if ($this->urlBuilder->getUrl('', ['_current' => true]) === $url) {
+            return !empty(parse_url($url, PHP_URL_PATH));
+        }
+
         return false;
+    }
+
+    protected function areParamsForCanonicalPageValid(): bool
+    {
+        $params = $this->request->getQuery()->toArray();
+        $paginationEnabled = $this->configuration->isCanonicalForPaginatedPagesEnabled();
+
+        if (!$paginationEnabled) {
+            return empty($params);
+        }
+
+        if (!isset($params[\MageSuite\SeoCanonical\Plugin\Catalog\Helper\Category\RemoveCanonicalForPagination::PAGINATION_PARAM])) {
+            return empty($params);
+        }
+
+        return count($params) === 1;
     }
 }

@@ -21,7 +21,6 @@
 
     <type name="Magento\Framework\View\Page\Config">
         <plugin sortOrder="1" name="magesuiteCheckoutRegistrationExtensionConfig" type="MageSuite\SeoCanonical\Plugin\Framework\View\Page\Config\OverrideProductCanonicalUrl"/>
-        <plugin name="add_page_param_to_category_canonical_url" type="MageSuite\SeoCanonical\Plugin\Framework\View\Page\Config\OverrideCategoryCanonicalUrl" sortOrder="500"/>
     </type>
 
     <type name="Magento\Catalog\Helper\Category">
