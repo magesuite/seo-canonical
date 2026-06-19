@@ -2,6 +2,9 @@
     "name": "creativestyle/magesuite-seo-canonical",
     "license": ["OSL-3.0", "AFL-3.0"],
     "type": "magento2-module",
+    "require": {
+        "magento/module-catalog": ">=104.0.8-p1"
+    },
     "autoload": {
         "files": ["registration.php"],
         "psr-4": {
