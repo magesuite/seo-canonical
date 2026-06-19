@@ -9,7 +9,7 @@ class RemoveCanonicalForPagination
     public const PAGINATION_PARAM = 'p';
 
     public function __construct(
-        protected \Magento\Framework\App\Request\Http $request,
+        protected \Magento\Framework\App\RequestInterface $request,
         protected \MageSuite\SeoCanonical\Helper\Configuration $configuration
     ) {
     }
