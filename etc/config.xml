@@ -3,14 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <seo>
-            <canonical>
+            <configuration>
                 <canonical_tag_enabled>0</canonical_tag_enabled>
-                <canonical_pagination_enabled>0</canonical_pagination_enabled>
-                <og_url_match_canonical_enabled>1</og_url_match_canonical_enabled>
-            </canonical>
-            <category>
                 <prev_next_link_enabled>0</prev_next_link_enabled>
-            </category>
+                <canonical_pagination_enabled>0</canonical_pagination_enabled>
+            </configuration>
         </seo>
     </default>
 </config>

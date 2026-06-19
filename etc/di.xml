@@ -15,12 +15,6 @@
                         <item name="sortOrder" xsi:type="number">40</item>
                     </item>
                 </item>
-                <item name="category" xsi:type="array">
-                    <item name="canonical_url" xsi:type="array">
-                        <item name="class" xsi:type="object">MageSuite\SeoCanonical\DataProviders\CategoryCanonicalUrl</item>
-                        <item name="sortOrder" xsi:type="number">40</item>
-                    </item>
-                </item>
             </argument>
         </arguments>
     </type>

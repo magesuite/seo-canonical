@@ -35,9 +35,9 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoConfigFixture default/seo/canonical/canonical_tag_enabled 1
+     * @magentoConfigFixture default/seo/configuration/canonical_tag_enabled 1
      */
-    public function testItReturnsCanonicalUrl(): void
+    public function testItReturnsCanonicalUrl()
     {
         $this->itReturnsCanonicalUrl();
         $this->itStripGetParamsFromCanonical();
@@ -82,9 +82,9 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoConfigFixture default/seo/canonical/canonical_tag_enabled 0
+     * @magentoConfigFixture default/seo/configuration/canonical_tag_enabled 0
      */
-    public function testItDontReturnsCanonicalUrl(): void
+    public function testItDontReturnsCanonicalUrl()
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home');
         $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrlForOtherPages());
