@@ -7,7 +7,7 @@ namespace MageSuite\SeoCanonical\Service;
 class CanonicalUrl
 {
     public function __construct(
-        protected \Magento\Framework\App\Request\Http $request,
+        protected \Magento\Framework\App\RequestInterface $request,
         protected \MageSuite\SeoCanonical\Helper\Configuration $configuration,
         protected \Magento\Framework\UrlInterface $urlBuilder,
         protected \Magento\Catalog\Helper\Category $categoryHelper
