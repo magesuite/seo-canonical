@@ -3,7 +3,8 @@
     "license": ["OSL-3.0", "AFL-3.0"],
     "type": "magento2-module",
     "require": {
-        "magento/module-catalog": ">=104.0.8"
+        "magento/module-catalog": ">=104.0.8",
+        "creativestyle/magesuite-opengraph": ">=1.4.0"
     },
     "autoload": {
         "files": ["registration.php"],
