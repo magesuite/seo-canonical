@@ -87,13 +87,28 @@ class CanonicalUrl
         return $this->request->getFullActionName() === 'catalog_category_view';
     }
 
-    protected function isHomepageWithStoreCodeInPath(string $url): bool
+    protected function isHomepageWithStoreCodeInPath(string &$url): bool
     {
-        if ($this->urlBuilder->getUrl('', ['_current' => true]) === $url) {
+        $currentUrl = $this->urlBuilder->getUrl('', ['_current' => true]);
+
+        if ($currentUrl === $url) {
+            $this->stripStoreCodeFromUrl($url);
+
             return !empty(parse_url($url, PHP_URL_PATH));
         }
 
         return false;
+    }
+
+    protected function stripStoreCodeFromUrl(string &$url): void
+    {
+        if (!$this->configuration->isRemoveStoreCodeFromHomepageEnabled()) {
+           return;
+        }
+
+        $url = $this->urlBuilder->getUrl('', ['_current' => true]);
+        $parts = parse_url($url);
+        $url = sprintf('%s://%s/', $parts['scheme'], $parts['host']);
     }
 
     protected function areParamsForCanonicalPageValid(): bool

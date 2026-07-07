@@ -25,6 +25,13 @@
                         <![CDATA[Enable canonical tag for <b>non-first</b> category pages (default Magento behaviour).<br/>When disabled, paginated category pages <b>will not</b> contain canonical tag (improvement provided by Magesuite).]]>
                     </comment>
                 </field>
+                <field id="remove_store_code_from_homepage" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Remove Store Code from Homepage</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[It removes store path /xx_xx/ from the homepage.]]>
+                    </comment>
+                </field>
                 <field id="og_url_match_canonical_enabled" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Align og:url with canonical on paginated category pages</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
