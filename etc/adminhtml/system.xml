@@ -32,12 +32,17 @@
                         <![CDATA[It removes store path /xx_xx/ from the homepage.]]>
                     </comment>
                 </field>
-                <field id="og_url_match_canonical_enabled" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="og_url_match_canonical_enabled" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Align og:url with canonical on paginated category pages</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>
                         <![CDATA[When enabled, og:url meta tag will match the canonical URL on paginated category pages (e.g. <b>?p=1</b>). Prevents conflicting signals to social platforms and search engines.]]>
                     </comment>
+                </field>
+                <field id="remove_trailing_slash" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Remove Trailing Slash From Canonical URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When enabled, trailing slash is removed from canonical URLs (e.g. /de-de/ becomes /de-de).</comment>
                 </field>
             </group>
             <group id="category" translate="label" type="text" sortOrder="2" showInDefault="1">
