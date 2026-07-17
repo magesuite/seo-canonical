@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\SeoCanonical\Test\Service;
+
+use Magento\TestFramework\Fixture\AppArea; // phpcs:ignore
+use Magento\TestFramework\Fixture\Config; // phpcs:ignore
 
 class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
 {
@@ -88,6 +93,24 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
     {
         $this->urlBuilderStub->method('getUrl')->willReturn('home');
         $this->assertEquals(null, $this->canonicalUrl->getCanonicalUrlForOtherPages());
+    }
+
+    #[AppArea('frontend')]
+    #[Config('seo/configuration/canonical_tag_enabled', 1)]
+    #[Config('seo/configuration/remove_trailing_slash', 1)]
+    public function testItRemovesTrailingSlashFromHomepageWithStorePathWhenEnabled(): void
+    {
+        $this->urlBuilderStub->method('getUrl')->willReturn('https://example.com/de-de/');
+        $this->assertEquals('https://example.com/de-de', $this->canonicalUrl->getCanonicalUrlForOtherPages());
+    }
+
+    #[AppArea('frontend')]
+    #[Config('seo/configuration/canonical_tag_enabled', 1)]
+    #[Config('seo/configuration/remove_trailing_slash', 0)]
+    public function testItPreservesTrailingSlashOnHomepageWhenDisabled(): void
+    {
+        $this->urlBuilderStub->method('getUrl')->willReturn('https://example.com/de-de/');
+        $this->assertEquals('https://example.com/de-de/', $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
 }
