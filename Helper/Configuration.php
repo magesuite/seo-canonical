@@ -11,6 +11,7 @@ class Configuration
     protected const SEO_CANONICAL_TAG_PATH = 'seo/canonical/canonical_tag_enabled';
     protected const SEO_CANONICAL_REMOVE_STORE_CODE_FROM_HOMEPAGE = 'seo/canonical/remove_store_code_from_homepage';
     protected const SEO_OG_URL_MATCH_CANONICAL = 'seo/canonical/og_url_match_canonical_enabled';
+    protected const SEO_CANONICAL_REMOVE_TRAILING_SLASH = 'seo/canonical/remove_trailing_slash';
 
     public function __construct(
         protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
@@ -43,5 +44,10 @@ class Configuration
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    public function isRemovingTrailingSlashEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::SEO_CANONICAL_REMOVE_TRAILING_SLASH);
     }
 }
