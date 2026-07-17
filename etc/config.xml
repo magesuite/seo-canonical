@@ -5,6 +5,7 @@
         <seo>
             <canonical>
                 <canonical_tag_enabled>0</canonical_tag_enabled>
+                <remove_trailing_slash>0</remove_trailing_slash>
                 <canonical_pagination_enabled>0</canonical_pagination_enabled>
                 <og_url_match_canonical_enabled>1</og_url_match_canonical_enabled>
             </canonical>
