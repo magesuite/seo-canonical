@@ -59,7 +59,7 @@ class CanonicalUrl
             return $this->categoryHelper->getCanonicalUrl($url);
         }
 
-        if (!$this->configuration->isRemovingTrailingSlashEnabled() && $this->isHomepageWithStoreCodeInPath($url)) {
+        if ($this->isHomepageWithStoreCodeInPath($url)) {
             return $url;
         }
 
