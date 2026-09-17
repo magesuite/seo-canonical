@@ -6,6 +6,8 @@ namespace MageSuite\SeoCanonical\Service;
 
 class CanonicalUrl
 {
+    protected const NOROUTE_ACTION_NAME = 'cms_noroute_index';
+
     public function __construct(
         protected \Magento\Framework\App\RequestInterface $request,
         protected \MageSuite\SeoCanonical\Helper\Configuration $configuration,
@@ -39,7 +41,8 @@ class CanonicalUrl
     public function isEnabledForOtherPages(): bool
     {
         return $this->configuration->isEnabledForOtherPages()
-            && !$this->isCategoryOrSearchOrProductPage();
+            && !$this->isCategoryOrSearchOrProductPage()
+            && !$this->isNoRoutePage();
     }
 
     public function isCanonicalPage(): bool
@@ -85,6 +88,11 @@ class CanonicalUrl
     protected function isCategoryPage(): bool
     {
         return $this->request->getFullActionName() === 'catalog_category_view';
+    }
+
+    protected function isNoRoutePage(): bool
+    {
+        return $this->request->getFullActionName() === self::NOROUTE_ACTION_NAME;
     }
 
     protected function isHomepageWithStoreCodeInPath(string &$url): bool
