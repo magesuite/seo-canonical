@@ -113,4 +113,14 @@ class CanonicalUrlTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('https://example.com/de-de/', $this->canonicalUrl->getCanonicalUrlForOtherPages());
     }
 
+    #[AppArea('frontend')]
+    #[Config('seo/canonical/canonical_tag_enabled', 1)]
+    public function testItDoesNotReturnCanonicalUrlOnNoRoutePage(): void
+    {
+        $this->urlBuilderStub->method('getUrl')->willReturn('https://example.com/cms/noroute/index');
+        $this->requestStub->method('getFullActionName')->willReturn('cms_noroute_index');
+
+        $this->assertNull($this->canonicalUrl->getCanonicalUrlForOtherPages());
+    }
+
 }
