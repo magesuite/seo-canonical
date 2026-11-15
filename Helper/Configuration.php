@@ -29,7 +29,7 @@ class Configuration
 
     public function isEnabledForOtherPages(): bool
     {
-        return $this->scopeConfig->isSetFlag(self::SEO_CANONICAL_TAG_PATH);
+        return $this->scopeConfig->isSetFlag(self::SEO_CANONICAL_TAG_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function isOgUrlMatchCanonicalEnabled(): bool
